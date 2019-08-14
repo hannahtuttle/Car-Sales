@@ -20,10 +20,24 @@ const initialState = {
       switch(action.type) {
         case 'ADD_FEATURES':
             return {
-                ...state, features: [...state.car.features, action.payload]
+                ...state, additionalPrice: state.additionalPrice + action.payload.price, 
+                car: {...state.car, features: [...state.car.features, action.payload]}
             };
+        case 'REMOVE_FEATURES':
+            return {
+                ...state, additionalPrice: state.additionalPrice - action.payload.price,
+                car: {...state.car, features: state.car.features.filter(item => {
+                   if(item.id !== action.payload.id){
+                       return item
+                   }
+                })}
+            }
         default:
             return state
       }
     
   }
+
+//   state.car.features.reduce((acc,value) => {
+//     return acc + value
+// }, state.car.features.price)
